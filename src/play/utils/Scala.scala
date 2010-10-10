@@ -81,6 +81,7 @@ case class Error[+E,+A](e:Either[E,A])  {
     def map[B](f:A=>B):Error[E,B]={
       Error(e.right.map(f))
     }
+    def filter[EE >: E](p:A=>Boolean,error:EE):Error[EE,A]=Error( e.right.filter(p).getOrElse(Left(error)) )
     def toOptionLoggingError():Option[A]={
       e.left.map(m => {error(m.toString); m}).right.toOption
     }
