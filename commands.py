@@ -35,12 +35,11 @@ def after(**kargs):
 
     # ~~~~~~~~~~~~~~~~~~~~~~ new
     if command == 'new':
-        shutil.rmtree(os.path.join(app.path, 'app/controllers'))
-        shutil.rmtree(os.path.join(app.path, 'app/models'))
+        os.unlink(os.path.join(app.path, 'app/controllers/Application.java'))
         os.unlink(os.path.join(app.path, 'test/BasicTest.java'))
         os.unlink(os.path.join(app.path, 'test/ApplicationTest.java'))
         module_dir = inspect.getfile(inspect.currentframe()).replace("commands.py", "")
-        shutil.copyfile(os.path.join(module_dir, 'resources', 'controllers.scala'), os.path.join(app.path, 'app', 'controllers.scala'))
+        shutil.copyfile(os.path.join(module_dir, 'resources', 'controllers', 'application.scala'), os.path.join(app.path, 'app', 'controllers', 'application.scala'))
         shutil.copyfile(os.path.join(module_dir, 'resources', 'test', 'BasicTest.scala'), os.path.join(app.path, 'test', 'BasicTest.scala'))
         shutil.copyfile(os.path.join(module_dir, 'resources', 'test', 'ApplicationTest.scala'), os.path.join(app.path, 'test', 'ApplicationTest.scala'))
         ac = open(os.path.join(app.path, 'conf/application.conf'), 'r')
