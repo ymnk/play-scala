@@ -37,8 +37,12 @@ def after(**kargs):
     if command == 'new':
         shutil.rmtree(os.path.join(app.path, 'app/controllers'))
         shutil.rmtree(os.path.join(app.path, 'app/models'))
+        os.unlink(os.path.join(app.path, 'test/BasicTest.java'))
+        os.unlink(os.path.join(app.path, 'test/ApplicationTest.java'))
         module_dir = inspect.getfile(inspect.currentframe()).replace("commands.py", "")
         shutil.copyfile(os.path.join(module_dir, 'resources', 'controllers.scala'), os.path.join(app.path, 'app', 'controllers.scala'))
+        shutil.copyfile(os.path.join(module_dir, 'resources', 'test', 'BasicTest.scala'), os.path.join(app.path, 'test', 'BasicTest.scala'))
+        shutil.copyfile(os.path.join(module_dir, 'resources', 'test', 'ApplicationTest.scala'), os.path.join(app.path, 'test', 'ApplicationTest.scala'))
         ac = open(os.path.join(app.path, 'conf/application.conf'), 'r')
         conf = ac.read()
         conf = conf + '\n# Disable auto-redirect for scala. It will be the default in the 1.0 version of the scala module\nscala.enableAutoRedirect=false\n'
